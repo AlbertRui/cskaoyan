@@ -1,12 +1,13 @@
 //
 // Created by Administrator on 2018/10/7.
 //
-#define MaxSize 50
-typedef int ElemType;
-typedef struct {
-    ElemType data[MaxSize];
-    int length;
-}SqList;
+#include "common.h"
+//#define MaxSize 50
+//typedef int ElemType;
+//typedef struct {
+//    ElemType data[MaxSize];
+//    int length;
+//}SqList;
 bool Del_Min(SqList &L, ElemType &value) {
     if (L.length == 0) return false;
     value = L.data[0];
