@@ -1,16 +1,13 @@
 /*
  * @Author       : Ryan Zhang
  * @Date         : 2020-03-11 21:11:58
- * @LastEditTime : 2020-03-11 23:37:38
+ * @LastEditTime : 2020-03-12 00:05:07
  * @Descripttion : util implements for section2
  */
 #include<stdio.h>
 #include<stdlib.h>
 
 #include "util.h"
-#include "SqList.h"
-#include "SeqList.h"
-
 /**
  * 初始化静态顺序表
  */
