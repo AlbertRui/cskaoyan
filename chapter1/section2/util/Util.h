@@ -1,7 +1,7 @@
 /*
  * @Author       : Ryan Zhang
  * @Date         : 2020-03-11 21:11:58
- * @LastEditTime : 2020-03-13 01:09:42
+ * @LastEditTime : 2020-03-13 01:21:46
  * @Descripttion : util define for section2
  */
 #ifndef UTIL_H
@@ -38,6 +38,14 @@ bool listInsert(SqList& l, int i, ElemType e);
  * @return: 成功返回true，失败返回false
  */
 bool listDelete(SqList& list, int i); 
+
+/**
+ * @description: 查找元素e，并返回其位序
+ * @param sqList 待查找顺序表
+ * @param e 待查找元素
+ * @return: 查找成功返回位序，失败返回0
+ */
+int locateElem(SqList sqList, ElemType e);
 
 /**
  * @description: 打印SqList数组元素 

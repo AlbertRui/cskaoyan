@@ -1,7 +1,7 @@
 /*
  * @Author       : Ryan Zhang
  * @Date         : 2020-03-11 21:11:58
- * @LastEditTime : 2020-03-13 00:55:03
+ * @LastEditTime : 2020-03-13 01:21:05
  * @Descripttion : util implements for section2
  */
 #include<stdio.h>
@@ -86,6 +86,21 @@ bool listDelete(SqList& list, int i) {
     printf("success delete the %dth element : %d\n", i, e);
     printSqList(list);
     return true;
+}
+
+/**
+ * @description: 查找元素e，并返回其位序
+ * @param sqList 待查找顺序表
+ * @param e 待查找元素
+ * @return: 查找成功返回位序，失败返回0
+ */
+int locateElem(SqList sqList, ElemType e) {
+    for (int i = 0; i < sqList.length; i++) {
+        if (sqList.data[i] == e) {
+            return i + 1;
+        }
+    }
+    return 0;
 }
 
 /**
