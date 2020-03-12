@@ -1,7 +1,7 @@
 /*
  * @Author       : Ryan Zhang
  * @Date         : 2020-03-11 21:11:58
- * @LastEditTime : 2020-03-13 00:02:43
+ * @LastEditTime : 2020-03-13 00:55:03
  * @Descripttion : util implements for section2
  */
 #include<stdio.h>
@@ -28,6 +28,7 @@ void initSqList(SqList& list, int size, int elemRange) {
     }
     list.length = size;
     printf("ending initial sqList......\n");
+    printSqList(list);
 } 
 
 /**
@@ -49,6 +50,7 @@ void clearSqList(SqList& list) {
  * @return: 是否插入成功
  */
 bool listInsert(SqList& l, int i, ElemType e) {
+    printf("begining insert %d for %dth.\n", e, i);
     int length = l.length;
     if (i < 1 || i > length || length == MaxSize)
         return false;
@@ -58,6 +60,31 @@ bool listInsert(SqList& l, int i, ElemType e) {
     }
     data[i - 1] = e;
     l.length++;
+    printf("ending listInsert......\n");
+    printSqList(l);
+    return true;
+}
+
+/**
+ * @description: 删除第i个元素，i从1开始
+ * @param list 待删除的list
+ * @param i 待删除元素的位序
+ * @return: 成功返回true，失败返回false
+ */
+bool listDelete(SqList& list, int i) {
+    printf("begining delete list......");
+    if (i < 1 || i > list.length) {
+        printf("error in delete element!\n");
+        return false;
+    }
+    ElemType* data = list.data;
+    ElemType e = data[i - 1];
+    for (int j = i; j < list.length; j++) {
+        data[j - 1] = data[j]; 
+    }
+    list.length--;
+    printf("success delete the %dth element : %d\n", i, e);
+    printSqList(list);
     return true;
 }
 
@@ -70,7 +97,10 @@ void printSqList(SqList list) {
     printf("now, the list length is : %d\n", list.length);
     ElemType* data = list.data;
     for (int i = 0; i < list.length; i++) {
+        if (i != 0 && i % 10 == 0) {
+            printf("\n");
+        }
         printf("%d\t", data[i]);
     }
-    printf("\n");
+    printf("\nending print list\n");
 }
