@@ -1,7 +1,7 @@
 /*
  * @Author       : Ryan Zhang
  * @Date         : 2020-03-11 21:26:31
- * @LastEditTime : 2020-03-11 23:36:56
+ * @LastEditTime : 2020-03-12 23:25:54
  * @Descripttion : define for SqList
  */
 #ifndef SQLIST_H
@@ -13,7 +13,7 @@ typedef int ElemType;
 
 typedef struct {
     ElemType data[MaxSize];
-    int length;
+    int length = 0;
 } SqList;
 
 #endif
