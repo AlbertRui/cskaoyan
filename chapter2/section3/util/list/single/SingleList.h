@@ -1,7 +1,7 @@
 /*
  * @Author       : Ryan Zhang
  * @Date         : 2020-03-15 15:36:59
- * @LastEditTime : 2020-03-15 18:23:29
+ * @LastEditTime : 2020-03-15 18:47:07
  * @Descripttion : 定义对于链表的各种操作
  */
 #ifndef UTIL_H

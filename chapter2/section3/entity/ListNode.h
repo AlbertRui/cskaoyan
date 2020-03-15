@@ -1,7 +1,7 @@
 /*
  * @Author       : Ryan Zhang
  * @Date         : 2020-03-15 15:34:52
- * @LastEditTime : 2020-03-15 16:41:03
+ * @LastEditTime : 2020-03-15 18:57:21
  * @Descripttion : 单链表的定义
  */
 #ifndef LIST_NODE_H
