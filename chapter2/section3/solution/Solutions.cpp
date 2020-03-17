@@ -1,7 +1,7 @@
 /*
  * @Author       : Ryan Zhang
  * @Date         : 2020-03-15 22:26:05
- * @LastEditTime : 2020-03-16 23:51:01
+ * @LastEditTime : 2020-03-17 21:22:50
  * @Descripttion : solutions for section3
  */
 #include <iostream>
@@ -187,21 +187,61 @@ void printValByAsc(ListNode *head) {
  * @param head 待操作链表头结点
  * @return: 分解后的另外一个单链表
  */
-ListNode *decompose(ListNode *head);
+ListNode *decompose(ListNode *head) {
+    ListNode *headB = new ListNode(0), *headA = head, *dummyB = headB;
+    while (headA != nullptr) {
+        headB->next = headA->next;
+        headB = headB->next;
+        if (headB != nullptr) {
+            headA->next = headB->next;
+        }
+    }
+    return dummyB;
+}
 
 /**
  * @description: 第十一题，{a1, b1, a2, b2 ..., an, bn} -> {a1, a2, ..., an} + {bn, b(n - 1), ..., b1}
  * @param head 待拆分元素的头结点
  * @return: 拆分后的另一个元素
  */
-ListNode *decompose(ListNode *head);
+ListNode *decompose2(ListNode *head) {
+    ListNode *headB = new ListNode(0), *headA = head, *p = headA->next, *q;
+    
+    while (p != nullptr) {
+        headA->next = p;
+        headA = p;
+        p = p->next;
+        if (p != nullptr) {
+            q - p->next;
+            p->next = headB->next;
+            headB->next = p;
+        }
+        p = q;
+    } 
+    headA->next = nullptr;
+    return headB;
+}
 
 /**
  * @description: 第十二题，去除升序链表中的重复元素
  * @param head 待操作元素头结点
  * @return: 去除重复后的单链表
  */
-ListNode *trimDuplication(ListNode *head);
+ListNode *trimDuplication(ListNode *head) {
+    if (head == nullptr) return nullptr;
+    ListNode *pre = head->next, *cur;
+    if (pre == nullptr) return head;
+    while (pre->next != nullptr) {
+        cur = pre->next;
+        if (pre->val == cur->val) {
+            pre->next = cur->next;
+            delete cur;
+        } else {
+            pre = pre->next;
+        }
+    }
+    return head;
+}
 
 /**
  * @description: 第十三题，合并两个升序链表为一个递减有序链表
@@ -209,12 +249,56 @@ ListNode *trimDuplication(ListNode *head);
  * @param headB 升序链表B
  * @return: 合并后的递减有序链表
  */
-ListNode *merge(ListNode *headA, ListNode *headB);
+ListNode *merge(ListNode *headA, ListNode *headB) { 
+    ListNode *pa = headA->next, *pb = headB->next, *p;
+    headA->next = nullptr;
+    while (pa && pb) {
+        if (pa->val < pb->val) {
+            p = pa->next;
+            pa->next = headA->next;
+            headA->next = pa;
+            pa = p;
+        } else {
+            p = pb->next;
+            pb->next = headA->next;
+            headA->next = pb;
+            pb = p;
+        }
+    }
+    if (pa) {
+        pb = pa;
+    }
+    while (pb != nullptr) {
+        p = pb->next;
+        pb->next = headA->next;
+        headA->next = pb;
+        pb = p;
+    }
+    delete headB;
+}
 
 /**
- * @description: 从两个升序链表的公共元素中产生单链表
+ * @description: 第十四题，从两个升序链表的公共元素中产生单链表
  * @param headA 升序链表A
  * @param headB 升序链表B
  * @return: 生成的新链表
  */
-ListNode *getListNodeByCommon(ListNode *headA, ListNode *headB);
+ListNode *getListNodeByCommon(ListNode *headA, ListNode *headB) {
+    ListNode *head = new ListNode(0), *dummy = head;
+    ListNode *pa = headA->next, *pb = headB->next;
+    while (pa && pb) {
+        if (pa->val < pb->val) {
+            pa = pa->next;
+        } else if (pa->val > pb->val) {
+            pb = pb->next;
+        } else {
+            ListNode *node = new ListNode(pa->val);
+            dummy->next = node;
+            dummy = node;
+            pa = pa->next;
+            pb = pb->next;
+        }
+    }
+    dummy->next = nullptr;
+    return head;
+}

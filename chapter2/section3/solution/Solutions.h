@@ -1,7 +1,7 @@
 /*
  * @Author       : Ryan Zhang
  * @Date         : 2020-03-15 22:25:51
- * @LastEditTime : 2020-03-15 23:29:42
+ * @LastEditTime : 2020-03-17 21:23:09
  * @Descripttion : 
  */
 #ifndef SOLUTIONS_H
@@ -90,7 +90,7 @@ ListNode *decompose(ListNode *head);
  * @param head 待拆分元素的头结点
  * @return: 拆分后的另一个元素
  */
-ListNode *decompose(ListNode *head);
+ListNode *decompose2(ListNode *head);
 
 /**
  * @description: 第十二题，去除升序链表中的重复元素
@@ -108,7 +108,7 @@ ListNode *trimDuplication(ListNode *head);
 ListNode *merge(ListNode *headA, ListNode *headB);
 
 /**
- * @description: 从两个升序链表的公共元素中产生单链表
+ * @description: 第十四题，从两个升序链表的公共元素中产生单链表
  * @param headA 升序链表A
  * @param headB 升序链表B
  * @return: 生成的新链表
