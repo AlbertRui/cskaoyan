@@ -1,7 +1,7 @@
 /*
  * @Author       : Ryan Zhang
  * @Date         : 2020-03-15 22:26:05
- * @LastEditTime : 2020-03-17 21:22:50
+ * @LastEditTime : 2020-03-17 21:28:49
  * @Descripttion : solutions for section3
  */
 #include <iostream>
