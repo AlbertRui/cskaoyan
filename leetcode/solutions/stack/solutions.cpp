@@ -1,7 +1,7 @@
 /*
  * @Author       : Ryan Zhang
  * @Date         : 2021-01-08 21:47:01
- * @LastEditTime : 2021-01-08 22:50:53
+ * @LastEditTime : 2021-01-08 23:09:07
  * @Descripttion : stack solutions from leetcode
  */
 #include <stdint.h>
@@ -38,6 +38,34 @@ class solutions {
             }
         }
         return stk.size() == 0;
+    }
+
+    /**
+     * 42. 接雨水给定 n 个非负整数表示每个宽度为 1 的柱子的高度图，
+     * 计算按此排列的柱子，下雨之后能接多少雨水。
+     */
+    int trap(vector<int>& height) {
+        int left = 0, right = height.size() - 1;
+        int res = 0;
+        int maxLeft = 0, maxRight = 0;
+        while (left <= right) {
+            if (height[left] <= height[right]) {
+                if (height[left] > maxLeft) {
+                    maxLeft = height[left];
+                } else {
+                    res += maxLeft - height[left];
+                }
+                left++;
+            } else {
+                if (height[right] >= maxRight) {
+                    maxRight = height[right];
+                } else {
+                    res += maxRight - height[right];
+                }
+                right--;
+            }
+        }
+        return res;
     }
 
     /*
