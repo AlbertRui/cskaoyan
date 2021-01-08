@@ -1,15 +1,44 @@
 /*
  * @Author       : Ryan Zhang
  * @Date         : 2021-01-08 21:47:01
- * @LastEditTime : 2021-01-08 22:06:12
+ * @LastEditTime : 2021-01-08 22:50:53
  * @Descripttion : stack solutions from leetcode
  */
 #include <stdint.h>
 #include <stdlib.h>
 #include <vector>
+#include <stack>
+#include <string>
 
 using namespace std;
+
 class solutions {
+
+    /**
+     * 20. 有效的括号
+     * 给定一个只包括 '('，')'，'{'，'}'，'['，']' 的字符串，判断字符串是否有效。
+     * 有效字符串需满足：
+     * 左括号必须用相同类型的右括号闭合。
+     * 左括号必须以正确的顺序闭合。
+     * 注意空字符串可被认为是有效字符串。
+     */
+    bool isValid(string s) {
+        stack<char> stk;
+        for (char& ch : s) {
+            switch (ch) {
+                case '{' : stk.push('}');
+                case '[' : stk.push(']');
+                case '(' : stk.push(')'); 
+                default : 
+                    if (stk.size() == 0 || ch != stk.top()) {
+                        return false;
+                    } else {
+                        stk.pop();
+                    } 
+            }
+        }
+        return stk.size() == 0;
+    }
 
     /*
      * 189. 旋转数组
@@ -41,6 +70,20 @@ class solutions {
             if (n & (1 << i)) {
                 ans += (1 << (31 - i));
             }
+        }
+        return ans;
+    }
+
+    /**
+     * 191. 位1的个数
+     * 编写一个函数，输入是一个无符号整数（以二进制串的形式），
+     * 返回其二进制表达式中数字位数为 '1' 的个数（也被称为汉明重量）。
+     */
+    int hammingWeight(uint32_t n) {
+        int ans = 0;
+        while (n) {
+            n &= (n - 1);
+            ans++;
         }
         return ans;
     }
