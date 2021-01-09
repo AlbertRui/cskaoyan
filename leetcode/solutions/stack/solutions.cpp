@@ -1,7 +1,7 @@
 /*
  * @Author       : Ryan Zhang
  * @Date         : 2021-01-08 21:47:01
- * @LastEditTime : 2021-01-09 12:16:28
+ * @LastEditTime : 2021-01-09 20:43:24
  * @Descripttion : stack solutions from leetcode
  */
 #include <stdint.h>
@@ -133,6 +133,47 @@ class solutions {
             maxArea = max(maxArea, heights[i] * (lessFromRight[i] - lessFromLeft[i] - 1));
         } 
         
+        return maxArea;
+    }
+
+    /**
+     * 85. 最大矩形
+     * 给定一个仅包含 0 和 1 、大小为 rows x cols 的二维二进制矩阵，
+     * 找出只包含 1 的最大矩形，并返回其面积。
+     */
+    int maximalRectangle(vector<vector<char>>& matrix) {
+        if (matrix.empty()) {
+            return 0;
+        }
+        const int m = matrix.size();
+        const int n = matrix[0].size();
+        int left[n], right[n], height[n];
+        fill_n(left, n, 0); fill_n(right, n, n - 1); fill_n(height, n, 0);
+        int maxArea = 0;
+        for (int i = 0; i < m; i++) {
+            int rB = n - 1;
+            for (int j = n - 1; j >= 0; j--) {
+                if (matrix[i][j] == '1') {
+                    right[j] = min(right[j], rB);
+                } else {
+                    right[j] = n - 1;
+                    rB = n - 1;
+                }
+            }
+
+            int lB = 0;
+            for (int j = 0; j < n; j++) {
+                if (matrix[i][j] == '1') {
+                    left[j] = max(left[j], lB);
+                    height[j]++;
+                    maxArea = max(maxArea, (right[j] - left[j] + 1));
+                } else {
+                    height[j] = 0;
+                    left[j] = 0;
+                    lB = j + 1;
+                }
+            }
+        }
         return maxArea;
     }
 
