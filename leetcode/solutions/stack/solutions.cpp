@@ -1,7 +1,7 @@
 /*
  * @Author       : Ryan Zhang
  * @Date         : 2021-01-08 21:47:01
- * @LastEditTime : 2021-01-09 20:43:24
+ * @LastEditTime : 2021-01-09 22:45:01
  * @Descripttion : stack solutions from leetcode
  */
 #include <stdint.h>
@@ -9,7 +9,10 @@
 #include <sstream>
 #include <vector>
 #include <stack>
+#include <queue>
 #include <string>
+
+#include "../../entity/TreeNode.h"
 
 using namespace std;
 
@@ -175,6 +178,61 @@ class solutions {
             }
         }
         return maxArea;
+    }
+
+    /**
+     * 94. 二叉树的中序遍历
+     * 给定一个二叉树的根节点 root ，返回它的 中序 遍历
+     */
+    vector<int> inorderTraversal(TreeNode* root) {
+        vector<int> res;
+        TreeNode* cur = root;
+        stack<TreeNode*> nodes;
+        while (cur != nullptr or !nodes.empty()) {
+            while (cur) {
+                nodes.push(cur);
+                cur = cur -> left;
+            }
+            cur = nodes.top();
+            nodes.pop();
+            res.push_back(cur -> val);
+            cur = cur -> right;
+        }
+        return res;
+    }
+
+    /**
+     * 103. 二叉树的锯齿形层序遍历
+     * 给定一个二叉树，返回其节点值的锯齿形层序遍历。
+     * （即先从左往右，再从右往左进行下一层遍历，以此类推，层与层之间交替进行）。
+     */
+    vector<vector<int>> zigzagLevelOrder(TreeNode* root) {
+        vector<vector<int>> res;
+        if (!root) return res; 
+        queue<TreeNode*> nodes;
+        nodes.push(root);
+        bool zigzag = true;
+        while (!nodes.empty()) {
+            int size = nodes.size();
+            vector<int> curRes(size);
+            for (int i = 0; i < size; i++) {
+                TreeNode* cur = nodes.front();
+                nodes.pop();
+                int index = (zigzag) ? i : (size - 1 - i);
+                curRes[index] = cur -> val;
+                TreeNode* left = cur -> left;
+                if (left) {
+                    nodes.push(left);
+                } 
+                TreeNode* right = cur -> right;
+                if (right) {
+                    nodes.push(right);
+                }
+            }
+            zigzag = !zigzag;
+            res.push_back(curRes);
+        }
+        return res;
     }
 
     /*
