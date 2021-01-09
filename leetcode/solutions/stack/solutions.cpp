@@ -1,7 +1,7 @@
 /*
  * @Author       : Ryan Zhang
  * @Date         : 2021-01-08 21:47:01
- * @LastEditTime : 2021-01-09 22:45:01
+ * @LastEditTime : 2021-01-09 23:40:28
  * @Descripttion : stack solutions from leetcode
  */
 #include <stdint.h>
@@ -233,6 +233,54 @@ class solutions {
             res.push_back(curRes);
         }
         return res;
+    }
+
+    /**
+     * 144.二叉树前序遍历
+     */
+    vector<int> preorderTraversal(TreeNode* root) {
+        vector<int> res;
+        if (!root) return res;
+        stack<TreeNode*> nodes;
+        TreeNode* cur = root;
+        while (cur) {
+            res.push_back(cur -> val);
+            if (cur -> right) {
+                nodes.push(cur -> right);
+            }
+            cur = cur -> left;
+            if (!cur and !nodes.empty()) {
+                cur = nodes.top();
+                nodes.pop();
+            }
+        } 
+        return res;
+    }
+
+    /**
+     * 145.二叉树后序遍历
+     */
+    vector<int> postorderTraversal(TreeNode* root) {
+        vector<int> nodes;
+        if (!root) return nodes;
+        stack<TreeNode*> todo;
+        TreeNode* cur = root, *last = nullptr;
+        while (cur or !todo.empty()) {
+            if (cur) {
+                todo.push(cur);
+                cur = cur -> left;
+            } else {
+                TreeNode* node = todo.top();
+                if (node -> right and last != node -> right) {
+                    cur = node -> right;
+                } else {
+                    nodes.push_back(node -> val);
+                    last = node;
+                    todo.pop();
+                }
+            }
+        }
+        return nodes;
     }
 
     /*
