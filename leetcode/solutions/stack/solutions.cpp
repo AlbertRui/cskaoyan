@@ -1,7 +1,7 @@
 /*
  * @Author       : Ryan Zhang
  * @Date         : 2021-01-08 21:47:01
- * @LastEditTime : 2021-01-09 11:03:09
+ * @LastEditTime : 2021-01-09 12:16:28
  * @Descripttion : stack solutions from leetcode
  */
 #include <stdint.h>
@@ -98,6 +98,42 @@ class solutions {
             return "/";
         } 
         return res;
+    }
+
+    /**
+     * 84. 柱状图中最大的矩形
+     * 给定 n 个非负整数，用来表示柱状图中各个柱子的高度。每个柱子彼此相邻，且宽度为 1 。
+     * 求在该柱状图中，能够勾勒出来的矩形的最大面积。
+     */
+    int largestRectangleArea(vector<int>& heights) {
+        int len = heights.size();
+        int lessFromLeft[len];
+        int lessFromRight[len];
+        lessFromLeft[0] = -1;
+        lessFromRight[len - 1] = len;
+
+        for (int i = 1; i < len; i++) {
+            int p = i - 1;
+            while (p >= 0 && heights[p] >= heights[i]) {
+                p = lessFromLeft[p];
+            }
+            lessFromLeft[i] = p;
+        }
+
+        for (int i = len - 2; i >= 0; i--) {
+            int p = i + 1;
+            while (p < len && heights[p] >= heights[i]) {
+                p = lessFromRight[p];
+            }
+            lessFromRight[i] = p;
+        }
+
+        int maxArea = 0;
+        for (int i = 0; i < len; i++) {
+            maxArea = max(maxArea, heights[i] * (lessFromRight[i] - lessFromLeft[i] - 1));
+        } 
+        
+        return maxArea;
     }
 
     /*
