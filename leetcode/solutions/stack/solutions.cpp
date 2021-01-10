@@ -1,16 +1,16 @@
 /*
  * @Author       : Ryan Zhang
  * @Date         : 2021-01-08 21:47:01
- * @LastEditTime : 2021-01-09 23:40:28
+ * @LastEditTime : 2021-01-10 16:49:16
  * @Descripttion : stack solutions from leetcode
  */
+#include <queue>
+#include <sstream>
+#include <stack>
 #include <stdint.h>
 #include <stdlib.h>
-#include <sstream>
-#include <vector>
-#include <stack>
-#include <queue>
 #include <string>
+#include <vector>
 
 #include "../../entity/TreeNode.h"
 
@@ -20,25 +20,28 @@ class solutions {
 
     /**
      * 20. 有效的括号
-     * 给定一个只包括 '('，')'，'{'，'}'，'['，']' 的字符串，判断字符串是否有效。
-     * 有效字符串需满足：
+     * 给定一个只包括 '('，')'，'{'，'}'，'['，']'
+     * 的字符串，判断字符串是否有效。 有效字符串需满足：
      * 左括号必须用相同类型的右括号闭合。
      * 左括号必须以正确的顺序闭合。
      * 注意空字符串可被认为是有效字符串。
      */
     bool isValid(string s) {
         stack<char> stk;
-        for (char& ch : s) {
+        for (char &ch : s) {
             switch (ch) {
-                case '{' : stk.push('}');
-                case '[' : stk.push(']');
-                case '(' : stk.push(')'); 
-                default : 
-                    if (stk.size() == 0 || ch != stk.top()) {
-                        return false;
-                    } else {
-                        stk.pop();
-                    } 
+            case '{':
+                stk.push('}');
+            case '[':
+                stk.push(']');
+            case '(':
+                stk.push(')');
+            default:
+                if (stk.size() == 0 || ch != stk.top()) {
+                    return false;
+                } else {
+                    stk.pop();
+                }
             }
         }
         return stk.size() == 0;
@@ -48,7 +51,7 @@ class solutions {
      * 42. 接雨水给定 n 个非负整数表示每个宽度为 1 的柱子的高度图，
      * 计算按此排列的柱子，下雨之后能接多少雨水。
      */
-    int trap(vector<int>& height) {
+    int trap(vector<int> &height) {
         int left = 0, right = height.size() - 1;
         int res = 0;
         int maxLeft = 0, maxRight = 0;
@@ -74,9 +77,14 @@ class solutions {
 
     /**
      * 71. 简化路径
-     * 以 Unix 风格给出一个文件的绝对路径，你需要简化它。或者换句话说，将其转换为规范路径。
-     * 在 Unix 风格的文件系统中，一个点（.）表示当前目录本身；此外，两个点 （..） 表示将目录切换到上一级（指向父目录）；两者都可以是复杂相对路径的组成部分。更多信息请参阅：Linux / Unix中的绝对路径 vs 相对路径
-     * 请注意，返回的规范路径必须始终以斜杠 / 开头，并且两个目录名之间必须只有一个斜杠 /。最后一个目录名（如果存在）不能以 / 结尾。
+     * 以 Unix
+     * 风格给出一个文件的绝对路径，你需要简化它。或者换句话说，将其转换为规范路径。
+     * 在 Unix 风格的文件系统中，一个点（.）表示当前目录本身；此外，两个点
+     * （..）
+     * 表示将目录切换到上一级（指向父目录）；两者都可以是复杂相对路径的组成部分。更多信息请参阅：Linux
+     * / Unix中的绝对路径 vs 相对路径 请注意，返回的规范路径必须始终以斜杠 /
+     * 开头，并且两个目录名之间必须只有一个斜杠
+     * /。最后一个目录名（如果存在）不能以 / 结尾。
      * 此外，规范路径必须是表示绝对路径的最短字符串。
      */
     string simplifyPath(string path) {
@@ -99,16 +107,17 @@ class solutions {
         }
         if (res.empty()) {
             return "/";
-        } 
+        }
         return res;
     }
 
     /**
      * 84. 柱状图中最大的矩形
-     * 给定 n 个非负整数，用来表示柱状图中各个柱子的高度。每个柱子彼此相邻，且宽度为 1 。
-     * 求在该柱状图中，能够勾勒出来的矩形的最大面积。
+     * 给定 n
+     * 个非负整数，用来表示柱状图中各个柱子的高度。每个柱子彼此相邻，且宽度为 1
+     * 。 求在该柱状图中，能够勾勒出来的矩形的最大面积。
      */
-    int largestRectangleArea(vector<int>& heights) {
+    int largestRectangleArea(vector<int> &heights) {
         int len = heights.size();
         int lessFromLeft[len];
         int lessFromRight[len];
@@ -133,9 +142,10 @@ class solutions {
 
         int maxArea = 0;
         for (int i = 0; i < len; i++) {
-            maxArea = max(maxArea, heights[i] * (lessFromRight[i] - lessFromLeft[i] - 1));
-        } 
-        
+            maxArea = max(
+                maxArea, heights[i] * (lessFromRight[i] - lessFromLeft[i] - 1));
+        }
+
         return maxArea;
     }
 
@@ -144,14 +154,16 @@ class solutions {
      * 给定一个仅包含 0 和 1 、大小为 rows x cols 的二维二进制矩阵，
      * 找出只包含 1 的最大矩形，并返回其面积。
      */
-    int maximalRectangle(vector<vector<char>>& matrix) {
+    int maximalRectangle(vector<vector<char>> &matrix) {
         if (matrix.empty()) {
             return 0;
         }
         const int m = matrix.size();
         const int n = matrix[0].size();
         int left[n], right[n], height[n];
-        fill_n(left, n, 0); fill_n(right, n, n - 1); fill_n(height, n, 0);
+        fill_n(left, n, 0);
+        fill_n(right, n, n - 1);
+        fill_n(height, n, 0);
         int maxArea = 0;
         for (int i = 0; i < m; i++) {
             int rB = n - 1;
@@ -184,19 +196,19 @@ class solutions {
      * 94. 二叉树的中序遍历
      * 给定一个二叉树的根节点 root ，返回它的 中序 遍历
      */
-    vector<int> inorderTraversal(TreeNode* root) {
+    vector<int> inorderTraversal(TreeNode *root) {
         vector<int> res;
-        TreeNode* cur = root;
-        stack<TreeNode*> nodes;
+        TreeNode *cur = root;
+        stack<TreeNode *> nodes;
         while (cur != nullptr or !nodes.empty()) {
             while (cur) {
                 nodes.push(cur);
-                cur = cur -> left;
+                cur = cur->left;
             }
             cur = nodes.top();
             nodes.pop();
-            res.push_back(cur -> val);
-            cur = cur -> right;
+            res.push_back(cur->val);
+            cur = cur->right;
         }
         return res;
     }
@@ -206,25 +218,26 @@ class solutions {
      * 给定一个二叉树，返回其节点值的锯齿形层序遍历。
      * （即先从左往右，再从右往左进行下一层遍历，以此类推，层与层之间交替进行）。
      */
-    vector<vector<int>> zigzagLevelOrder(TreeNode* root) {
+    vector<vector<int>> zigzagLevelOrder(TreeNode *root) {
         vector<vector<int>> res;
-        if (!root) return res; 
-        queue<TreeNode*> nodes;
+        if (!root)
+            return res;
+        queue<TreeNode *> nodes;
         nodes.push(root);
         bool zigzag = true;
         while (!nodes.empty()) {
             int size = nodes.size();
             vector<int> curRes(size);
             for (int i = 0; i < size; i++) {
-                TreeNode* cur = nodes.front();
+                TreeNode *cur = nodes.front();
                 nodes.pop();
                 int index = (zigzag) ? i : (size - 1 - i);
-                curRes[index] = cur -> val;
-                TreeNode* left = cur -> left;
+                curRes[index] = cur->val;
+                TreeNode *left = cur->left;
                 if (left) {
                     nodes.push(left);
-                } 
-                TreeNode* right = cur -> right;
+                }
+                TreeNode *right = cur->right;
                 if (right) {
                     nodes.push(right);
                 }
@@ -238,49 +251,209 @@ class solutions {
     /**
      * 144.二叉树前序遍历
      */
-    vector<int> preorderTraversal(TreeNode* root) {
+    vector<int> preorderTraversal(TreeNode *root) {
         vector<int> res;
-        if (!root) return res;
-        stack<TreeNode*> nodes;
-        TreeNode* cur = root;
+        if (!root)
+            return res;
+        stack<TreeNode *> nodes;
+        TreeNode *cur = root;
         while (cur) {
-            res.push_back(cur -> val);
-            if (cur -> right) {
-                nodes.push(cur -> right);
+            res.push_back(cur->val);
+            if (cur->right) {
+                nodes.push(cur->right);
             }
-            cur = cur -> left;
+            cur = cur->left;
             if (!cur and !nodes.empty()) {
                 cur = nodes.top();
                 nodes.pop();
             }
-        } 
+        }
         return res;
     }
 
     /**
      * 145.二叉树后序遍历
      */
-    vector<int> postorderTraversal(TreeNode* root) {
+    vector<int> postorderTraversal(TreeNode *root) {
         vector<int> nodes;
-        if (!root) return nodes;
-        stack<TreeNode*> todo;
-        TreeNode* cur = root, *last = nullptr;
+        if (!root)
+            return nodes;
+        stack<TreeNode *> todo;
+        TreeNode *cur = root, *last = nullptr;
         while (cur or !todo.empty()) {
             if (cur) {
                 todo.push(cur);
-                cur = cur -> left;
+                cur = cur->left;
             } else {
-                TreeNode* node = todo.top();
-                if (node -> right and last != node -> right) {
-                    cur = node -> right;
+                TreeNode *node = todo.top();
+                if (node->right and last != node->right) {
+                    cur = node->right;
                 } else {
-                    nodes.push_back(node -> val);
+                    nodes.push_back(node->val);
                     last = node;
                     todo.pop();
                 }
             }
         }
         return nodes;
+    }
+
+    /**
+     * 逆波兰表达式求值
+     */
+    int evalRPN(vector<string> &tokens) {
+        int a, b;
+        stack<int> vals;
+        for (string token : tokens) {
+            if (token == "+") {
+                int a = vals.top();
+                vals.pop();
+                int b = vals.top();
+                vals.pop();
+                vals.push(a + b);
+            } else if (token == "-") {
+                int b = vals.top();
+                vals.pop();
+                int a = vals.top();
+                vals.pop();
+                vals.push(a - b);
+            } else if (token == "/") {
+                int b = vals.top();
+                vals.pop();
+                int a = vals.top();
+                vals.pop();
+                vals.push(a / b);
+            } else if (token == "*") {
+                int b = vals.top();
+                vals.pop();
+                int a = vals.top();
+                vals.pop();
+                vals.push(a * b);
+            } else {
+                vals.push(stoi(token));
+            }
+        }
+        return vals.top();
+    }
+
+    /**
+     * 224.基本计算器
+     */
+    int calculate(string s) {
+        stack<int> vals;
+        int res = 0, num = 0, sign = 1;
+        for (char ch : s) {
+            if (isdigit(ch)) {
+                num += 10 * num + (ch - '0');
+            } else if (ch == '+') {
+                res += sign * num;
+                num = 0;
+                sign = 1;
+            } else if (ch == '-') {
+                res += sign * num;
+                num = 0;
+                sign = -1;
+            } else if (ch == '(') {
+                vals.push(res);
+                vals.push(sign);
+                res = 0;
+                sign = 1;
+            } else if (ch == ')') {
+                res += sign * num;
+                num = 0;
+                res *= vals.top();
+                vals.pop();
+                res += vals.top();
+                vals.pop();
+            }
+        }
+        if (num == 0) {
+            res += sign * num;
+        }
+        return res;
+    }
+
+    /**
+     * 基本计算器II
+     */
+    int calculateII(string s) {
+        if (s.size() == 0) return 0;
+        stack<int> vals;
+        s += '+';
+        char op = '+';
+        for (int i = 0, n = 0; i < s.size(); i++) {
+            char c = s[i];
+            if (c >= '0' && c <= '9') {
+                n = n * 10 + c - '0';
+                continue;
+            }
+            if (c == ' ') continue;
+            if (op == '+') vals.push(n);
+            else if (op == '-') vals.push(-n);
+            else if (op == '*') {
+                int val = vals.top(); vals.pop();
+                vals.push(val * n);
+            } else if (op == '/') {
+                int val = vals.top(); vals.pop();
+                vals.push(val / n);
+            }
+            op = c;
+            n = 0;
+        }
+
+        int total = 0;
+        while (!vals.empty()) {
+            total += vals.top();
+            vals.pop();
+        }
+        return total;
+    }
+
+    /**
+     * 316.去除重复字母
+     */
+    string removeDuplicateLetters(string s) {
+        int res[26] = {0};
+        bool visited[26] = {false};
+        for (char ch : s) {
+            res[ch - 'a']++;
+        }
+        stack<char> chars;
+        int index = 0;
+        for (char c : s) {
+            index = c - 'a';
+            res[index]--;
+            if (!visited[index]) {
+                while (!chars.empty() and c < chars.top() and res[chars.top() - 'a'] != 0) {
+                    visited[chars.top() - 'a'] = false;
+                    chars.pop();
+                }
+                visited[index] = true;
+                chars.push(c);
+            }
+        }
+        string ans = "";
+        while (!chars.empty()) {
+            ans = chars.top() + ans;
+            chars.pop();
+        }
+        return ans;
+    }
+
+    /**
+     * 331.验证二叉树的前序序列化
+     */
+    bool isValidSerialization(string preorder) {
+        if (preorder.empty()) return false;
+        preorder += ",";
+        int diff = 1;
+        for (int idx = 0; idx < preorder.size(); idx++) {
+            if (preorder[idx] == ',') {
+                if (--diff < 0) return false;
+                if (preorder[idx - 1] != '#') diff += 2; 
+            }
+        }
+        return diff == 0;
     }
 
     /*
