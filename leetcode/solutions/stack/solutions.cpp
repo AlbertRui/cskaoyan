@@ -1,7 +1,7 @@
 /*
  * @Author       : Ryan Zhang
  * @Date         : 2021-01-08 21:47:01
- * @LastEditTime : 2021-01-10 16:49:16
+ * @LastEditTime : 2021-01-10 20:45:32
  * @Descripttion : stack solutions from leetcode
  */
 #include <queue>
@@ -456,6 +456,66 @@ class solutions {
         return diff == 0;
     }
 
+    /**
+     * 394.字符串解码
+     */
+    string decodeString(string s) {
+        string res = "";
+        stack<int> countStack;
+        stack<string> resStack;
+        int k = 0;
+        for (char ch : s) {
+            if (isdigit(ch)) {
+                k += 10 * k + ch - '0';
+            } else if (ch == '[') {
+                countStack.push(k);
+                resStack.push(res);
+                res = "";
+                k = 0;
+            } else if (ch == ']') {
+                string tmp = res;
+                res = resStack.top(); resStack.pop();
+                k = countStack.top(); countStack.pop();
+                while (k-- > 0) {
+                    res += tmp;
+                }
+            } else {
+                res += ch;
+            }
+        }
+        return res;
+    }
+
+    /**
+     * 移掉k位数字
+     */
+    string removeKdigits(string num, int k) {
+        int len = num.size();
+        if (len == 0) return "0";
+        stack<char> chars;
+        for (char ch : num) {
+            while (k > 0 and !chars.empty() and chars.top() > ch) {
+                chars.pop();
+                k--;
+            }
+            chars.push(ch);
+        }
+        while (k-- > 0) chars.pop();
+        string ans = "";
+        while (!chars.empty()) {
+            ans = chars.top() + ans;
+            chars.pop();
+        }
+        if (ans.size() == 0) return "0";
+        int pos = 0;
+        while (pos < ans.size()) {
+            if (ans[pos++] != '0') {
+                break;
+            }
+        }
+        return ans.substr(pos - 1);
+    }
+
     /*
      * 189. 旋转数组
      * 给定一个数组，将数组中的元素向右移动 k 个位置，其中 k 是非负数。
@@ -463,12 +523,12 @@ class solutions {
     void rotate(vector<int> &nums, int k) {
         int n = nums.size();
         k = k % n;
-        reverse(nums, 0, n - k - 1);
-        reverse(nums, n - k, n - 1);
-        reverse(nums, 0, n - 1);
+        reverse1(nums, 0, n - k - 1);
+        reverse1(nums, n - k, n - 1);
+        reverse1(nums, 0, n - 1);
     }
 
-    void reverse(vector<int> &A, int l, int r) {
+    void reverse1(vector<int> &A, int l, int r) {
         while (l < r) {
             swap(A[l], A[r]);
             l++;
