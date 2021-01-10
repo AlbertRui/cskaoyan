@@ -1,7 +1,7 @@
 /*
  * @Author       : Ryan Zhang
  * @Date         : 2021-01-08 21:47:01
- * @LastEditTime : 2021-01-10 20:45:32
+ * @LastEditTime : 2021-01-10 21:22:51
  * @Descripttion : stack solutions from leetcode
  */
 #include <queue>
@@ -514,6 +514,22 @@ class solutions {
             }
         }
         return ans.substr(pos - 1);
+    }
+
+    /**
+     * 456. 132模式
+     */
+    bool find132pattern(vector<int>& nums) {
+        int s3 = INT_MIN;
+        stack<int> vals;
+        for (int i = nums.size() - 1; i >= 0; i--) {
+            if (nums[i] < s3) return true;
+            while (!vals.empty() and nums[i] > vals.top()) {
+                s3 = vals.top(); vals.pop();
+            }
+            vals.push(nums[i]);
+        }
+        return false;
     }
 
     /*
