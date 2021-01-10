@@ -1,7 +1,7 @@
 /*
  * @Author       : Ryan Zhang
  * @Date         : 2021-01-08 21:47:01
- * @LastEditTime : 2021-01-10 21:22:51
+ * @LastEditTime : 2021-01-10 22:07:21
  * @Descripttion : stack solutions from leetcode
  */
 #include <queue>
@@ -11,6 +11,7 @@
 #include <stdlib.h>
 #include <string>
 #include <vector>
+#include <map>
 
 #include "../../entity/TreeNode.h"
 
@@ -530,6 +531,29 @@ class solutions {
             vals.push(nums[i]);
         }
         return false;
+    }
+
+    /**
+     * 496.下一个更大元素
+     */
+    vector<int> nextGreaterElement(vector<int>& nums1, vector<int>& nums2) {
+        map<int, int> m;
+        stack<int> vals;
+        for (int num : nums2) {
+            while (!vals.empty() and vals.top() < num) {
+                m[vals.top()] = num;
+                vals.pop();
+            }
+            vals.push(num);
+        }
+        for (int i = 0; i < nums1.size(); i++) {
+            if (m.count(nums1[i])) {
+                nums1[i] = m[nums1[i]];
+            } else {
+                nums1[i] = -1;
+            }
+        }
+        return nums1;
     }
 
     /*
