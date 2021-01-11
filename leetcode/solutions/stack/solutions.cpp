@@ -1,7 +1,7 @@
 /*
  * @Author       : Ryan Zhang
  * @Date         : 2021-01-08 21:47:01
- * @LastEditTime : 2021-01-11 16:36:09
+ * @LastEditTime : 2021-01-11 17:18:49
  * @Descripttion : stack solutions from leetcode
  */
 #include <queue>
@@ -595,6 +595,22 @@ class solutions {
             }
         }
         return ans;
+    }
+
+    /**
+     * 行星碰撞
+     */
+    vector<int> asteroidCollision(vector<int>& asteroids) {
+        vector<int> s;
+        for (int i = 0; i < asteroids.size(); i++) {
+            if (asteroids[i] > 0 or s.empty() or s.back() < 0) {
+                s.push_back(asteroids[i]);
+            } else if (s.back() <= -asteroids[i]) {
+                if (s.back() < -asteroids[i]) i--;
+                s.pop_back();
+            }
+        }
+        return s;
     }
 
     /*
