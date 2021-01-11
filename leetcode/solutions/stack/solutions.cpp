@@ -1,7 +1,7 @@
 /*
  * @Author       : Ryan Zhang
  * @Date         : 2021-01-08 21:47:01
- * @LastEditTime : 2021-01-10 22:07:21
+ * @LastEditTime : 2021-01-11 16:36:09
  * @Descripttion : stack solutions from leetcode
  */
 #include <queue>
@@ -554,6 +554,47 @@ class solutions {
             }
         }
         return nums1;
+    }
+
+    /**
+     * 下一个更大元素II
+     */
+    vector<int> nextGreaterElements(vector<int>& nums) {
+        int n = nums.size();
+        vector<int> stack, res(n, -1);
+        for (int i = 0; i < n * 2; i++) {
+            while (stack.size() and nums[stack.back()] < nums[i % n]) {
+                res[stack.back()] = nums[i % n];
+                stack.pop_back();
+            }
+            stack.push_back(i % n);
+        }
+        return res;
+    }
+
+    /**
+     * 棒球比赛
+     */
+    int calPoints(vector<string>& ops) {
+        int ans = 0;
+        vector<int> vals;
+        for (string op : ops) {
+            if (op == "C") {
+                ans -= vals.back();
+                vals.pop_back();
+            } else {
+                if (op == "D") {
+                    vals.push_back(vals.back() * 2);
+                } else if (op == "+") {
+                    int size = vals.size();
+                    vals.push_back(vals[size - 1] + vals[size - 2]);
+                } else {
+                    vals.push_back(stoi(op));
+                }
+                ans += vals.back();
+            }
+        }
+        return ans;
     }
 
     /*
