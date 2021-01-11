@@ -1,7 +1,7 @@
 /*
  * @Author       : Ryan Zhang
  * @Date         : 2021-01-08 21:47:01
- * @LastEditTime : 2021-01-11 17:18:49
+ * @LastEditTime : 2021-01-11 17:38:43
  * @Descripttion : stack solutions from leetcode
  */
 #include <queue>
@@ -611,6 +611,23 @@ class solutions {
             }
         }
         return s;
+    }
+
+    /**
+     * 739.每日温度
+     */
+    vector<int> dailyTemperatures(vector<int>& T) {
+        stack<int> idxs;
+        int len = T.size();
+        vector<int> res(len ,0);
+        for (int i = 0; i < len; i++) {
+            while (!idxs.empty() and T[i] > T[idxs.top()]) {
+                int idx = idxs.top(); idxs.pop();
+                res[idx] = i - idx;
+            }
+            idxs.push(i);
+        }
+        return res;
     }
 
     /*
