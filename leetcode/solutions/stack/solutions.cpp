@@ -741,6 +741,23 @@ class solutions {
         return i == 0;
     }
 
+    /**
+     * 1003.检查替换后的子字符串是否有效
+     */
+    bool isValid(string s) {
+        vector<char> stack;
+        for (char c : s) {
+            if (c == 'c') {
+                int n = stack.size();
+                if (n < 2 || stack[n - 1] != 'b' || stack[n - 2] != 'c') return false;
+                stack.pop_back(), stack.pop_back();
+            } else {
+                stack.push_back(c);
+            }
+        }
+        return stack.size() == 0;
+    }
+
     /*
      * 189. 旋转数组
      * 给定一个数组，将数组中的元素向右移动 k 个位置，其中 k 是非负数。
