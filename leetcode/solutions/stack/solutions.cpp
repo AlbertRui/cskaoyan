@@ -789,6 +789,42 @@ class solutions {
         return res;
     }
 
+    /**
+     * 删除字符串中的所有相邻重复项
+     */
+    string removeDuplicates(string S) {
+        string res = "";
+        for (char c : S) {
+            if (res.size() and res.back() == c) {
+                res.pop_back();
+            } else {
+                res.push_back(c);
+            }
+        }
+        return res;    
+    }
+
+    /**
+     * 1081.不同字符的最小序列
+     */
+    string smallestSubsequence(string s) {
+        string res = "";
+        int last[26] = {}, seen[26] = {}, n = s.size();
+        for (int i = 0; i < n; i++) {
+            last[s[i] - 'a'] = i; 
+        }   
+        for (int i = 0; i < n; i++) {
+            if (seen[s[i] - 'a']++) {
+                continue;
+            }
+            while (!res.empty() and res.back() > s[i] and i < last[res.back() - 'a']) {
+                seen[res.back() - 'a'] = 0, res.pop_back();
+            }
+            res.push_back(s[i]);
+        }
+        return res;
+    }
+
     /*
      * 189. 旋转数组
      * 给定一个数组，将数组中的元素向右移动 k 个位置，其中 k 是非负数。
