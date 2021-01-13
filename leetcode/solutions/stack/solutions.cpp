@@ -656,6 +656,24 @@ class solutions {
         return i == -1 && j == -1;
     }
 
+    /**
+     * 856.括号的分数
+     */
+    int scoreOfParentheses(string S) {
+        int res = 0, l = 0;
+        for (int i = 0; i < S.size(); i++) {
+            if (S[i] == '(') {
+                l++;
+            } else {
+                l--;
+            }
+            if (S[i] == ')' && S[i - 1] == '(') {
+                res += 1 << l;
+            }
+        }
+        return res;
+    }
+
     /*
      * 189. 旋转数组
      * 给定一个数组，将数组中的元素向右移动 k 个位置，其中 k 是非负数。
