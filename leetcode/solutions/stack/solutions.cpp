@@ -674,6 +674,25 @@ class solutions {
         return res;
     }
 
+    /**
+     * 880.索引处的解码字符串
+     */
+    string decodeAtIndex(string S, int K) {
+        long N = 0, i;
+        for (int i = 0; N < K; i++) {
+            N = isdigit(S[i]) ? N * (S[i] - '0') : N + 1;
+        }
+        while (i--) {
+            if (isdigit(S[i])) {
+                N /= S[i] - '0';
+                K %= N;
+            } else if (K % N-- == 0) {
+                return string(1, S[i]);
+            }
+        }
+        return "";
+    }
+
     /*
      * 189. 旋转数组
      * 给定一个数组，将数组中的元素向右移动 k 个位置，其中 k 是非负数。
