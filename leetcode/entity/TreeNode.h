@@ -4,6 +4,9 @@
  * @LastEditTime : 2021-01-09 20:57:12
  * @Descripttion : Definition for a binary tree node.
  */
+#ifndef TREE_NODE_H
+#define TREE_NODE_H
+
  struct TreeNode {
      int val;
      TreeNode *left;
@@ -12,3 +15,5 @@
      TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
      TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  };
+
+ #endif
