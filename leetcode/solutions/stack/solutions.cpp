@@ -630,6 +630,32 @@ class solutions {
         return res;
     }
 
+    /**
+     * 比较含退格的字符串
+     */
+    bool backspaceCompare(string S, string T) {
+        int i = S.size(), j = T.size(), back = 0;
+        while (true) {
+            back = 0;
+            while (i >= 0 && (back > 0 || S[i] == '#')) {
+                back += S[i] == '#'? 1 : -1;
+                i--;
+            }
+            back = 0;
+            while (j >= 0 && (back > 0 || T[j] == '#')) {
+                back += T[j] == '#'? 1 : -1;
+                j--;
+            }
+            if (i >= 0 && j >= 0 && S[i] == T[j]) {
+                i--;
+                j--;
+            } else {
+                break;
+            }
+        }
+        return i == -1 && j == -1;
+    }
+
     /*
      * 189. 旋转数组
      * 给定一个数组，将数组中的元素向右移动 k 个位置，其中 k 是非负数。
