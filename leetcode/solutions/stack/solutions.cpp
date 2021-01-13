@@ -776,6 +776,19 @@ class solutions {
         return res;
     }
 
+    /**
+     * 1021.移除外部括号
+     */
+    string removeOuterParentheses(string S) {
+        int opened = 0;
+        string res = "";
+        for (char c : S) {
+            if (c == '(' and opened++ > 0) res += c;
+            if (c == ')' and opened-- > 1) res += c;  
+        }
+        return res;
+    }
+
     /*
      * 189. 旋转数组
      * 给定一个数组，将数组中的元素向右移动 k 个位置，其中 k 是非负数。
