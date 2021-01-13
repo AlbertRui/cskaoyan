@@ -710,6 +710,37 @@ class solutions {
         return res;
     }
 
+    /**
+     * 使括号有效的最少添加
+     */
+    int minAddToMakeValid(string S) {
+        int left = 0, right = 0;
+        for (char c : S) {
+            if (c == '(') {
+                right++;
+            } else if (right > 0) {
+                right--;
+            } else {
+                left++;
+            }
+        }
+        return left + right;
+    }
+
+    /**
+     * 946.验证栈序列
+     */
+    bool validateStackSequences(vector<int>& pushed, vector<int>& popped) {
+        int i = 0, j = 0;
+        for (int x : pushed) {
+            pushed[i++] = x;
+            while (i > 0 and pushed[i - 1] == popped[j]) {
+                --i, ++j;
+            }
+        }
+        return i == 0;
+    }
+
     /*
      * 189. 旋转数组
      * 给定一个数组，将数组中的元素向右移动 k 个位置，其中 k 是非负数。
