@@ -14,6 +14,7 @@
 #include <map>
 
 #include "../../entity/TreeNode.h"
+#include "../../entity/ListNode.h"
 
 using namespace std;
 
@@ -756,6 +757,23 @@ class solutions {
             }
         }
         return stack.size() == 0;
+    }
+
+    /**
+     * 1019.链表中的下一个更大节点
+     */
+    vector<int> nextLargerNodes(ListNode* head) {
+        vector<int> res, stack;
+        for (ListNode* node; node; node->next) {
+            while (stack.size() and res[stack.back()] < node->val) {
+                res[stack.back()] = node->val;
+                stack.pop_back();
+            } 
+            stack.push_back(res.size());
+            res.push_back(node->val);
+        }
+        for (int i : stack) res[i] = 0;
+        return res;
     }
 
     /*
