@@ -13,6 +13,7 @@
 #include <vector>
 #include <map>
 #include <unordered_map>
+#include <algorithm>
 
 #include "../../entity/TreeNode.h"
 #include "../../entity/ListNode.h"
@@ -931,6 +932,30 @@ class solutions {
             res.append(p.first, p.second);
         }
         return res;
+    }
+
+    /**
+     * 1249.移除无效的括号
+     */
+    string minRemoveToMakeValid(string s) {
+        vector<int> stack;
+        for (int i = 0; i < s.size(); i++) {
+            if (s[i] == '(') {
+                stack.push_back(i);
+            } else if (s[i] == ')') {
+                if (!stack.empty()) {
+                    stack.pop_back();
+                } else {
+                    s[i] = '*';
+                }
+            }
+        }
+        while (!stack.empty()) {
+            s[stack.back()] = '*';
+            stack.pop_back();
+        }
+        s.erase(remove(s.begin(), s.end(), '*'), s.end());
+        return s;
     }
 
     /*
