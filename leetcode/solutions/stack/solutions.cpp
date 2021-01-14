@@ -1056,6 +1056,38 @@ class solutions {
         return res + right;
     }
 
+    /**
+     * 1544.整理字符串
+     */
+    string makeGood(string s) {
+        string res;
+        for (char c : s) {
+            if (!res.empty() and abs(c - res.back()) == 32) {
+                res.pop_back();
+            } else {
+                res.push_back(c);
+            }
+        }
+        return res;
+    }
+
+    /**
+     * 1598.文件夹操作日志搜集器
+     */
+    int minOperations(vector<string>& logs) {
+        int res = 0;
+        for (string log : logs) {
+            if (log != "./") {
+                if (log == "../") {
+                    res = max(0, --res);
+                } else {
+                    res++;
+                }
+            }
+        }
+        return res;
+    }
+
     /*
      * 189. 旋转数组
      * 给定一个数组，将数组中的元素向右移动 k 个位置，其中 k 是非负数。
