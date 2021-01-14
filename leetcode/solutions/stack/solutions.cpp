@@ -1017,6 +1017,45 @@ class solutions {
         return text;
     }
 
+    /**
+     * 1441.用栈操作构建数组
+     */
+    vector<string> buildArray(vector<int>& target, int n) {
+        vector<string> res;
+        for (int j = 0, i = 1; i <= n and j < target.size(); i++) {
+            res.push_back("push");
+            if (target[j] == i) {
+                j++;
+            } else {
+                res.push_back("pop");
+            }
+        } 
+        return res;
+    }
+
+    /**
+     * 1541.平衡括号字符串的最少插入次数
+     */
+    int minInsertions(string s) {
+        int res = 0, right = 0;
+        for (int i = 0; i < s.size(); i++) {
+            if (s[i] == '(') {
+                if (right % 2 > 0) {
+                    right--;
+                    res++;
+                } 
+                right += 2;
+            } else {
+                right--;
+                if (right < 0) {
+                    right += 2;
+                    res++;
+                }
+            }
+        }
+        return res + right;
+    }
+
     /*
      * 189. 旋转数组
      * 给定一个数组，将数组中的元素向右移动 k 个位置，其中 k 是非负数。
