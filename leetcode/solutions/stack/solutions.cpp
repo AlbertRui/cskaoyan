@@ -886,6 +886,34 @@ class solutions {
         return res;
     }
 
+    /**
+     * 1190.反转每对括号间的子串
+     */
+    string reverseParentheses(string s) {
+        int n = s.size();
+        vector<int> opened, pair(n);
+        for (int i = 0; i < n; i++) {
+            if (s[i] == '(') {
+                opened.push_back(i);
+            } 
+            if (s[i] == ')') {
+                int j = opened.back();
+                opened.pop_back();
+                pair[i] = j;
+                pair[j] = i;
+            }
+        }
+        string res;
+        for (int i = 0, d = 1; i < n; i += d) {
+            if (s[i] == '(' or s[i] == ')') {
+                i = pair[i], d = -d;
+            } else {
+                res += s[i];
+            }
+        }
+        return res;
+    }
+
     /*
      * 189. 旋转数组
      * 给定一个数组，将数组中的元素向右移动 k 个位置，其中 k 是非负数。
