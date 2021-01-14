@@ -4,19 +4,19 @@
  * @LastEditTime : 2021-01-11 17:38:43
  * @Descripttion : stack solutions from leetcode
  */
+#include <algorithm>
+#include <map>
 #include <queue>
 #include <sstream>
 #include <stack>
 #include <stdint.h>
 #include <stdlib.h>
 #include <string>
-#include <vector>
-#include <map>
 #include <unordered_map>
-#include <algorithm>
+#include <vector>
 
-#include "../../entity/TreeNode.h"
 #include "../../entity/ListNode.h"
+#include "../../entity/TreeNode.h"
 
 using namespace std;
 
@@ -381,7 +381,8 @@ class solutions {
      * 基本计算器II
      */
     int calculateII(string s) {
-        if (s.size() == 0) return 0;
+        if (s.size() == 0)
+            return 0;
         stack<int> vals;
         s += '+';
         char op = '+';
@@ -391,14 +392,19 @@ class solutions {
                 n = n * 10 + c - '0';
                 continue;
             }
-            if (c == ' ') continue;
-            if (op == '+') vals.push(n);
-            else if (op == '-') vals.push(-n);
+            if (c == ' ')
+                continue;
+            if (op == '+')
+                vals.push(n);
+            else if (op == '-')
+                vals.push(-n);
             else if (op == '*') {
-                int val = vals.top(); vals.pop();
+                int val = vals.top();
+                vals.pop();
                 vals.push(val * n);
             } else if (op == '/') {
-                int val = vals.top(); vals.pop();
+                int val = vals.top();
+                vals.pop();
                 vals.push(val / n);
             }
             op = c;
@@ -428,7 +434,8 @@ class solutions {
             index = c - 'a';
             res[index]--;
             if (!visited[index]) {
-                while (!chars.empty() and c < chars.top() and res[chars.top() - 'a'] != 0) {
+                while (!chars.empty() and c < chars.top() and
+                       res[chars.top() - 'a'] != 0) {
                     visited[chars.top() - 'a'] = false;
                     chars.pop();
                 }
@@ -448,13 +455,16 @@ class solutions {
      * 331.验证二叉树的前序序列化
      */
     bool isValidSerialization(string preorder) {
-        if (preorder.empty()) return false;
+        if (preorder.empty())
+            return false;
         preorder += ",";
         int diff = 1;
         for (int idx = 0; idx < preorder.size(); idx++) {
             if (preorder[idx] == ',') {
-                if (--diff < 0) return false;
-                if (preorder[idx - 1] != '#') diff += 2; 
+                if (--diff < 0)
+                    return false;
+                if (preorder[idx - 1] != '#')
+                    diff += 2;
             }
         }
         return diff == 0;
@@ -478,8 +488,10 @@ class solutions {
                 k = 0;
             } else if (ch == ']') {
                 string tmp = res;
-                res = resStack.top(); resStack.pop();
-                k = countStack.top(); countStack.pop();
+                res = resStack.top();
+                resStack.pop();
+                k = countStack.top();
+                countStack.pop();
                 while (k-- > 0) {
                     res += tmp;
                 }
@@ -495,7 +507,8 @@ class solutions {
      */
     string removeKdigits(string num, int k) {
         int len = num.size();
-        if (len == 0) return "0";
+        if (len == 0)
+            return "0";
         stack<char> chars;
         for (char ch : num) {
             while (k > 0 and !chars.empty() and chars.top() > ch) {
@@ -504,13 +517,15 @@ class solutions {
             }
             chars.push(ch);
         }
-        while (k-- > 0) chars.pop();
+        while (k-- > 0)
+            chars.pop();
         string ans = "";
         while (!chars.empty()) {
             ans = chars.top() + ans;
             chars.pop();
         }
-        if (ans.size() == 0) return "0";
+        if (ans.size() == 0)
+            return "0";
         int pos = 0;
         while (pos < ans.size()) {
             if (ans[pos++] != '0') {
@@ -523,13 +538,15 @@ class solutions {
     /**
      * 456. 132模式
      */
-    bool find132pattern(vector<int>& nums) {
+    bool find132pattern(vector<int> &nums) {
         int s3 = INT_MIN;
         stack<int> vals;
         for (int i = nums.size() - 1; i >= 0; i--) {
-            if (nums[i] < s3) return true;
+            if (nums[i] < s3)
+                return true;
             while (!vals.empty() and nums[i] > vals.top()) {
-                s3 = vals.top(); vals.pop();
+                s3 = vals.top();
+                vals.pop();
             }
             vals.push(nums[i]);
         }
@@ -539,7 +556,7 @@ class solutions {
     /**
      * 496.下一个更大元素
      */
-    vector<int> nextGreaterElement(vector<int>& nums1, vector<int>& nums2) {
+    vector<int> nextGreaterElement(vector<int> &nums1, vector<int> &nums2) {
         map<int, int> m;
         stack<int> vals;
         for (int num : nums2) {
@@ -562,7 +579,7 @@ class solutions {
     /**
      * 下一个更大元素II
      */
-    vector<int> nextGreaterElements(vector<int>& nums) {
+    vector<int> nextGreaterElements(vector<int> &nums) {
         int n = nums.size();
         vector<int> stack, res(n, -1);
         for (int i = 0; i < n * 2; i++) {
@@ -578,7 +595,7 @@ class solutions {
     /**
      * 棒球比赛
      */
-    int calPoints(vector<string>& ops) {
+    int calPoints(vector<string> &ops) {
         int ans = 0;
         vector<int> vals;
         for (string op : ops) {
@@ -603,13 +620,14 @@ class solutions {
     /**
      * 行星碰撞
      */
-    vector<int> asteroidCollision(vector<int>& asteroids) {
+    vector<int> asteroidCollision(vector<int> &asteroids) {
         vector<int> s;
         for (int i = 0; i < asteroids.size(); i++) {
             if (asteroids[i] > 0 or s.empty() or s.back() < 0) {
                 s.push_back(asteroids[i]);
             } else if (s.back() <= -asteroids[i]) {
-                if (s.back() < -asteroids[i]) i--;
+                if (s.back() < -asteroids[i])
+                    i--;
                 s.pop_back();
             }
         }
@@ -619,13 +637,14 @@ class solutions {
     /**
      * 739.每日温度
      */
-    vector<int> dailyTemperatures(vector<int>& T) {
+    vector<int> dailyTemperatures(vector<int> &T) {
         stack<int> idxs;
         int len = T.size();
-        vector<int> res(len ,0);
+        vector<int> res(len, 0);
         for (int i = 0; i < len; i++) {
             while (!idxs.empty() and T[i] > T[idxs.top()]) {
-                int idx = idxs.top(); idxs.pop();
+                int idx = idxs.top();
+                idxs.pop();
                 res[idx] = i - idx;
             }
             idxs.push(i);
@@ -641,12 +660,12 @@ class solutions {
         while (true) {
             back = 0;
             while (i >= 0 && (back > 0 || S[i] == '#')) {
-                back += S[i] == '#'? 1 : -1;
+                back += S[i] == '#' ? 1 : -1;
                 i--;
             }
             back = 0;
             while (j >= 0 && (back > 0 || T[j] == '#')) {
-                back += T[j] == '#'? 1 : -1;
+                back += T[j] == '#' ? 1 : -1;
                 j--;
             }
             if (i >= 0 && j >= 0 && S[i] == T[j]) {
@@ -699,7 +718,7 @@ class solutions {
     /**
      * 907.子数组的最小值之和
      */
-    int sumSubarrayMins(vector<int>& A) {
+    int sumSubarrayMins(vector<int> &A) {
         long res = 0, n = A.size(), mod = 1e9 + 7, j, k;
         stack<int> s;
         for (int i = 0; i <= n; ++i) {
@@ -733,7 +752,7 @@ class solutions {
     /**
      * 946.验证栈序列
      */
-    bool validateStackSequences(vector<int>& pushed, vector<int>& popped) {
+    bool validateStackSequences(vector<int> &pushed, vector<int> &popped) {
         int i = 0, j = 0;
         for (int x : pushed) {
             pushed[i++] = x;
@@ -752,7 +771,8 @@ class solutions {
         for (char c : s) {
             if (c == 'c') {
                 int n = stack.size();
-                if (n < 2 || stack[n - 1] != 'b' || stack[n - 2] != 'c') return false;
+                if (n < 2 || stack[n - 1] != 'b' || stack[n - 2] != 'c')
+                    return false;
                 stack.pop_back(), stack.pop_back();
             } else {
                 stack.push_back(c);
@@ -764,17 +784,18 @@ class solutions {
     /**
      * 1019.链表中的下一个更大节点
      */
-    vector<int> nextLargerNodes(ListNode* head) {
+    vector<int> nextLargerNodes(ListNode *head) {
         vector<int> res, stack;
-        for (ListNode* node; node; node->next) {
+        for (ListNode *node; node; node->next) {
             while (stack.size() and res[stack.back()] < node->val) {
                 res[stack.back()] = node->val;
                 stack.pop_back();
-            } 
+            }
             stack.push_back(res.size());
             res.push_back(node->val);
         }
-        for (int i : stack) res[i] = 0;
+        for (int i : stack)
+            res[i] = 0;
         return res;
     }
 
@@ -785,8 +806,10 @@ class solutions {
         int opened = 0;
         string res = "";
         for (char c : S) {
-            if (c == '(' and opened++ > 0) res += c;
-            if (c == ')' and opened-- > 1) res += c;  
+            if (c == '(' and opened++ > 0)
+                res += c;
+            if (c == ')' and opened-- > 1)
+                res += c;
         }
         return res;
     }
@@ -803,7 +826,7 @@ class solutions {
                 res.push_back(c);
             }
         }
-        return res;    
+        return res;
     }
 
     /**
@@ -813,13 +836,14 @@ class solutions {
         string res = "";
         int last[26] = {}, seen[26] = {}, n = s.size();
         for (int i = 0; i < n; i++) {
-            last[s[i] - 'a'] = i; 
-        }   
+            last[s[i] - 'a'] = i;
+        }
         for (int i = 0; i < n; i++) {
             if (seen[s[i] - 'a']++) {
                 continue;
             }
-            while (!res.empty() and res.back() > s[i] and i < last[res.back() - 'a']) {
+            while (!res.empty() and res.back() > s[i] and
+                   i < last[res.back() - 'a']) {
                 seen[res.back() - 'a'] = 0, res.pop_back();
             }
             res.push_back(s[i]);
@@ -830,7 +854,7 @@ class solutions {
     /**
      * 1124.表现良好的最长时间段
      */
-    int longestWPI(vector<int>& hours) {
+    int longestWPI(vector<int> &hours) {
         int res = 0, score = 0, n = hours.size();
         unordered_map<int, int> seen;
         for (int i = 0; i < n; i++) {
@@ -852,7 +876,7 @@ class solutions {
     /**
      * 1130.叶值得最小生成树
      */
-    int mctFromLeafValues(vector<int>& arr) {
+    int mctFromLeafValues(vector<int> &arr) {
         int res = 0;
         vector<int> stack = {INT_MAX};
         for (int a : arr) {
@@ -872,7 +896,7 @@ class solutions {
     /**
      * 1131.绝对值表达式的最大值
      */
-    int maxAbsValExpr(vector<int>& x, vector<int>& y) {
+    int maxAbsValExpr(vector<int> &x, vector<int> &y) {
         int res = 0, smallest, n = x.size(), cur;
         for (int p : {1, -1}) {
             for (int q : {1, -1}) {
@@ -896,7 +920,7 @@ class solutions {
         for (int i = 0; i < n; i++) {
             if (s[i] == '(') {
                 opened.push_back(i);
-            } 
+            }
             if (s[i] == ')') {
                 int j = opened.back();
                 opened.pop_back();
@@ -928,7 +952,7 @@ class solutions {
             }
         }
         string res;
-        for (auto& p : stack) {
+        for (auto &p : stack) {
             res.append(p.first, p.second);
         }
         return res;
@@ -956,6 +980,41 @@ class solutions {
         }
         s.erase(remove(s.begin(), s.end(), '*'), s.end());
         return s;
+    }
+
+    /**
+     * 1410.HTML标签解析器
+     */
+    string entityParser(string text) {
+        vector<pair<string, char>> encoded[8] = {
+            {},
+            {},
+            {},
+            {},
+            {{"&gt;", '>'}, {"&lt;", '<'}},
+            {{"&amp;", '&'}},
+            {{"&quot;", '"'}, {"&apos;", '\''}},
+            {{"&frasl;", '/'}}};
+        int st = 0, p = 0;
+        for (auto i = 0; i < text.size(); ++i, ++p) {
+            text[p] = text[i];
+            if (text[p] == '&')
+                st = p;
+            if (text[p] == ';') {
+                auto sz = p - st + 1;
+                if (sz >= 4 && sz <= 7)
+                    for (auto &[enc, dec] : encoded[sz]) {
+                        if (text.compare(st, sz, enc) == 0) {
+                            p = st;
+                            text[p] = dec;
+                            break;
+                        }
+                    }
+                st = p + 1;
+            }
+        }
+        text.resize(p);
+        return text;
     }
 
     /*
