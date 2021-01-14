@@ -868,6 +868,24 @@ class solutions {
         return res;
     }
 
+    /**
+     * 1131.绝对值表达式的最大值
+     */
+    int maxAbsValExpr(vector<int>& x, vector<int>& y) {
+        int res = 0, smallest, n = x.size(), cur;
+        for (int p : {1, -1}) {
+            for (int q : {1, -1}) {
+                smallest = p * x[0] + q * y[0] + 0;
+                for (int i = 0; i < n; i++) {
+                    cur = p * x[i] + q * y[i] + i;
+                    res = max(res, cur - smallest);
+                    smallest = min(smallest, cur);
+                }
+            }
+        }
+        return res;
+    }
+
     /*
      * 189. 旋转数组
      * 给定一个数组，将数组中的元素向右移动 k 个位置，其中 k 是非负数。
