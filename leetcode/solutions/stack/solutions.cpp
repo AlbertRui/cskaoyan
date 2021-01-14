@@ -848,6 +848,26 @@ class solutions {
         return res;
     }
 
+    /**
+     * 1130.叶值得最小生成树
+     */
+    int mctFromLeafValues(vector<int>& arr) {
+        int res = 0;
+        vector<int> stack = {INT_MAX};
+        for (int a : arr) {
+            while (stack.back() <= a) {
+                int mid = stack.back();
+                stack.pop_back();
+                res += mid * min(stack.back(), a);
+            }
+            stack.push_back(a);
+        }
+        for (int i = 2; i < stack.size(); i++) {
+            res += stack[i] * stack[i - 1];
+        }
+        return res;
+    }
+
     /*
      * 189. 旋转数组
      * 给定一个数组，将数组中的元素向右移动 k 个位置，其中 k 是非负数。
