@@ -914,6 +914,25 @@ class solutions {
         return res;
     }
 
+    /**
+     * 1209.删除字符串中的所有相邻项
+     */
+    string removeDuplicates(string s, int k) {
+        vector<pair<int, char>> stack = {{0, '#'}};
+        for (char c : s) {
+            if (stack.back().second != c) {
+                stack.push_back({1, c});
+            } else if (++stack.back().first == k) {
+                stack.pop_back();
+            }
+        }
+        string res;
+        for (auto& p : stack) {
+            res.append(p.first, p.second);
+        }
+        return res;
+    }
+
     /*
      * 189. 旋转数组
      * 给定一个数组，将数组中的元素向右移动 k 个位置，其中 k 是非负数。
