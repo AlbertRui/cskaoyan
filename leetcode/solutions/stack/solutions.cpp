@@ -12,6 +12,7 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <unordered_map>
 
 #include "../../entity/TreeNode.h"
 #include "../../entity/ListNode.h"
@@ -821,6 +822,28 @@ class solutions {
                 seen[res.back() - 'a'] = 0, res.pop_back();
             }
             res.push_back(s[i]);
+        }
+        return res;
+    }
+
+    /**
+     * 1124.表现良好的最长时间段
+     */
+    int longestWPI(vector<int>& hours) {
+        int res = 0, score = 0, n = hours.size();
+        unordered_map<int, int> seen;
+        for (int i = 0; i < n; i++) {
+            score += hours[i] > 8 ? 1 : -1;
+            if (score > 0) {
+                res = i + 1;
+            } else {
+                if (seen.find(score) == seen.end()) {
+                    seen[score] = i;
+                }
+                if (seen.find(score - 1) != seen.end()) {
+                    res = max(res, i - seen[score - 1]);
+                }
+            }
         }
         return res;
     }
