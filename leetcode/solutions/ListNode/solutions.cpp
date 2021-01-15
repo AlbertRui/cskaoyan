@@ -1,7 +1,7 @@
 /*
  * @Author       : Ryan Zhang
  * @Date         : 2021-01-15 14:18:46
- * @LastEditTime : 2021-01-15 19:29:48
+ * @LastEditTime : 2021-01-15 20:40:37
  * @Descripttion : ListNode cases for LeetCode
  */
 
@@ -146,5 +146,26 @@ class solutoins {
         ListNode* newHead = tail->next;
         tail->next = NULL;
         return newHead;
+    }
+
+    /**
+     * 82.删除排序链表中的重复元素
+     */
+    ListNode* deleteDuplicates(ListNode* head) {
+        if(!head) return NULL;
+        ListNode* dummy = new ListNode(0), *pre = dummy, *cur = head;
+        dummy->next = head;
+        while(cur){
+            while(cur->next and cur->val == cur->next->val){
+                cur = cur->next;
+            }
+            if(pre->next == cur){
+                pre = pre->next;
+            } else {
+                pre->next = cur->next;
+            }
+            cur = cur->next;
+        }
+        return dummy->next;
     }
 };
