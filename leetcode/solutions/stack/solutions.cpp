@@ -1088,6 +1088,22 @@ class solutions {
         return res;
     }
 
+    /**
+     * 1673.找出最具竞争力的子序列
+     */
+    vector<int> mostCompetitive(vector<int>& nums, int k) {
+        vector<int> stack;
+        for (int i = 0; i < nums.size(); i++) {
+            while (!stack.empty() and nums[i] < stack.back() and stack.size() + nums.size() - i > k) {
+                stack.pop_back();
+            }
+            if (stack.size() < k) {
+                stack.push_back(nums[i]);
+            }
+        }
+        return stack;
+    }
+
     /*
      * 189. 旋转数组
      * 给定一个数组，将数组中的元素向右移动 k 个位置，其中 k 是非负数。
