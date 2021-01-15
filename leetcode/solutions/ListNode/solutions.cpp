@@ -1,7 +1,7 @@
 /*
  * @Author       : Ryan Zhang
  * @Date         : 2021-01-15 14:18:46
- * @LastEditTime : 2021-01-15 19:05:59
+ * @LastEditTime : 2021-01-15 19:29:48
  * @Descripttion : ListNode cases for LeetCode
  */
 
@@ -129,5 +129,22 @@ class solutoins {
             tail = tail->next;
         }  
         return dummy->next;
+    }
+
+    /**
+     * 61.旋转链表
+     */
+    ListNode* rotateRight(ListNode* head, int k) {
+        if (!head) return head;
+        ListNode* tail = head;
+        int len = 1;
+        while (tail->next) tail = tail->next, len++;
+        tail->next = head;
+        if (k %= len) {
+            for (int i = 0; i < len - k; i++) tail = tail->next;
+        }    
+        ListNode* newHead = tail->next;
+        tail->next = NULL;
+        return newHead;
     }
 };
