@@ -1,7 +1,7 @@
 /*
  * @Author       : Ryan Zhang
  * @Date         : 2021-01-15 14:18:46
- * @LastEditTime : 2021-01-15 16:14:02
+ * @LastEditTime : 2021-01-15 19:05:59
  * @Descripttion : ListNode cases for LeetCode
  */
 
@@ -108,5 +108,26 @@ class solutoins {
         head->next = swapPairs(head->next->next);
         newHead->next = head;
         return newHead;
+    }
+
+    /**
+     * 25.k个一组反转链表
+     */
+    ListNode* reverseKGroup(ListNode* head, int k) {
+        int n = 0;
+        for (ListNode* i = head; i; n++, i = i->next);
+        ListNode* dummy = new ListNode(0); 
+        dummy->next = head;
+        for (ListNode *pre = dummy, *tail = head; n >= k; n -= k) {
+            for (int i = 1; i < k; i++) {
+                ListNode* next = tail->next->next;
+                tail->next->next = pre->next;
+                pre->next = tail->next;
+                tail->next = next;
+            }
+            pre = tail;
+            tail = tail->next;
+        }  
+        return dummy->next;
     }
 };
