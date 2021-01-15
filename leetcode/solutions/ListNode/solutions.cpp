@@ -1,7 +1,7 @@
 /*
  * @Author       : Ryan Zhang
  * @Date         : 2021-01-15 14:18:46
- * @LastEditTime : 2021-01-15 15:59:34
+ * @LastEditTime : 2021-01-15 16:14:02
  * @Descripttion : ListNode cases for LeetCode
  */
 
@@ -97,5 +97,16 @@ class solutoins {
             }
         }
         return dummy->next;
+    }
+
+    /**
+     * 24.两两交换链表中的节点
+     */
+    ListNode* swapPairs(ListNode* head) {
+        if (!head or !head->next) return head;
+        ListNode* newHead = head->next;
+        head->next = swapPairs(head->next->next);
+        newHead->next = head;
+        return newHead;
     }
 };
