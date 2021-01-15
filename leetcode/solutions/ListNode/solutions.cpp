@@ -1,7 +1,7 @@
 /*
  * @Author       : Ryan Zhang
  * @Date         : 2021-01-15 14:18:46
- * @LastEditTime : 2021-01-15 14:32:41
+ * @LastEditTime : 2021-01-15 14:55:41
  * @Descripttion : ListNode cases for LeetCode
  */
 
@@ -22,5 +22,22 @@ class solutoins {
             p = p->next;
         }
         return preHead.next;
+    }
+
+    /**
+     * 19.删除链表倒数第n个节点
+     */
+    ListNode* removeNthFromEnd(ListNode* head, int n) {
+        ListNode *slow = new ListNode(0), *res = slow, *fast = head;
+        slow->next = fast;
+        while (n--) {
+            fast = fast->next;
+        }
+        while (fast) {
+            fast = fast->next;
+            slow = slow->next;
+        }
+        slow->next = slow->next->next;
+        return res->next;
     }
 };
