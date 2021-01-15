@@ -1104,6 +1104,28 @@ class solutions {
         return stack;
     }
 
+    /**
+     * 面试题17.21：直方图的储水量
+     */
+    int trap(vector<int>& height) {
+        if (height.size() < 3) {
+            return 0;
+        }
+        int res = 0;
+        int left = 0, right = height.size() - 1;
+        int leftMax = height[left], rightMax = height[right];
+        while (left < right) {
+            if (leftMax < rightMax) {
+                res += leftMax - height[left++];
+                leftMax = max(height[left], leftMax);
+            } else {
+                res += rightMax - height[right--];
+                rightMax = max(rightMax, height[right]);
+            }
+        }
+        return res;
+    }
+
     /*
      * 189. 旋转数组
      * 给定一个数组，将数组中的元素向右移动 k 个位置，其中 k 是非负数。
