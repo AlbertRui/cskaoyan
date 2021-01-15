@@ -1,7 +1,7 @@
 /*
  * @Author       : Ryan Zhang
  * @Date         : 2021-01-15 14:18:46
- * @LastEditTime : 2021-01-15 21:12:05
+ * @LastEditTime : 2021-01-15 21:28:21
  * @Descripttion : ListNode cases for LeetCode
  */
 
@@ -203,5 +203,22 @@ class solutoins {
         p2->next = NULL;
         p1->next = node2.next;
         return node1.next;
+    }
+
+    /**
+     * 92.反转链表II
+     */
+    ListNode* reverseBetween(ListNode* head, int m, int n) {
+        ListNode* dummy = new ListNode(0), *pre = dummy, *start, *then;
+        dummy->next = head;
+        for (int i = 0; i < m - 1; i++) pre = pre->next; 
+        start = pre->next, then = start->next;
+        for (int i = 0; i < n - m; i++) {
+            start->next = then->next;
+            then->next = pre->next;
+            pre->next = then;
+            then = start->next;
+        }
+        return dummy->next;
     }
 };
