@@ -1,7 +1,7 @@
 /*
  * @Author       : Ryan Zhang
  * @Date         : 2021-01-15 14:18:46
- * @LastEditTime : 2021-01-21 21:30:16
+ * @LastEditTime : 2021-01-21 22:59:34
  * @Descripttion : ListNode cases for LeetCode
  */
 
@@ -254,5 +254,25 @@ class solutoins {
             if (fast == slow) return true;
         } 
         return false;
+    }
+
+    /**
+     * 142.环形链表II
+     */
+    ListNode *detectCycle(ListNode *head) {
+        if (!head or !head->next) return nullptr;
+        ListNode *fast = head, *slow = head;
+        while (fast and fast->next) {
+            fast = fast->next->next;
+            slow = slow->next;
+            if (fast == slow) break;
+        }
+        if (fast != slow) return nullptr;
+        fast = head;
+        while (fast != slow) {
+            fast = fast->next;
+            slow = slow->next;
+        }
+        return fast;
     }
 };
