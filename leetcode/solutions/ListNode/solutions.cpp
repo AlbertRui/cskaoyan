@@ -1,7 +1,7 @@
 /*
  * @Author       : Ryan Zhang
  * @Date         : 2021-01-15 14:18:46
- * @LastEditTime : 2021-01-21 21:17:11
+ * @LastEditTime : 2021-01-21 21:30:16
  * @Descripttion : ListNode cases for LeetCode
  */
 
@@ -241,5 +241,18 @@ class solutoins {
         root->left = sortedListToBST(head);
         root->right = sortedListToBST(mid->next);
         return root;
+    }
+
+    /**
+     * 141.判断链表是否有环
+     */
+    bool hasCycle(ListNode *head) {
+        ListNode *fast = head, *slow = head;
+        while (fast and fast->next) {
+            slow = slow->next;
+            fast = fast->next->next;
+            if (fast == slow) return true;
+        } 
+        return false;
     }
 };
