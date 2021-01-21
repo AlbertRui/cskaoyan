@@ -1,7 +1,7 @@
 /*
  * @Author       : Ryan Zhang
  * @Date         : 2021-01-15 14:18:46
- * @LastEditTime : 2021-01-15 21:28:21
+ * @LastEditTime : 2021-01-21 21:17:11
  * @Descripttion : ListNode cases for LeetCode
  */
 
@@ -9,6 +9,7 @@
 #include <queue>
 
 #include "../../entity/ListNode.h"
+#include "../../entity/TreeNode.h"
 
 using namespace std;
 
@@ -220,5 +221,25 @@ class solutoins {
             then = start->next;
         }
         return dummy->next;
+    }
+
+    /**
+     * 109.有序链表转换二叉搜索树
+     */
+    TreeNode* sortedListToBST(ListNode* head) {
+        if (!head) return nullptr;
+        if (!head->next) return new TreeNode(head->val);
+        ListNode *fast = head->next, *slow = head;
+        while (fast->next && fast->next->next) {
+            fast = fast->next->next;
+            slow = slow->next;
+        }
+        
+        ListNode *mid = slow->next;
+        slow->next = nullptr;
+        TreeNode *root = new TreeNode(mid->val);
+        root->left = sortedListToBST(head);
+        root->right = sortedListToBST(mid->next);
+        return root;
     }
 };
