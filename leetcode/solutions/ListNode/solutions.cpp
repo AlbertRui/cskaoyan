@@ -1,7 +1,7 @@
 /*
  * @Author       : Ryan Zhang
  * @Date         : 2021-01-15 14:18:46
- * @LastEditTime : 2021-01-21 22:59:34
+ * @LastEditTime : 2021-01-27 22:02:58
  * @Descripttion : ListNode cases for LeetCode
  */
 
@@ -274,5 +274,33 @@ class solutoins {
             slow = slow->next;
         }
         return fast;
+    }
+
+    /**
+     * 143.重排链表
+     */
+    void reorderList(ListNode* head) {
+        if (!head or !head->next) return;
+        ListNode* p1 = head, *p2 = head;
+        while (p2->next and p2->next->next) {
+            p1 = p1->next;
+            p2 = p2->next->next;
+        }
+        ListNode* preMid = p1, *preCur = p1->next;
+        while (preCur->next) {
+            ListNode* next = preCur->next;
+            preCur->next = next->next;
+            next->next = preMid->next;
+            preMid->next = next;
+        }
+        p1 = head;
+        p2 = preMid->next;
+        while(p1 != preMid) {
+            preMid->next = p2->next;
+            p2->next = p1->next;
+            p1->next = p2;
+            p1 = p2->next;
+            p2 = preMid->next;
+        }
     }
 };
