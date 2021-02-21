@@ -1,12 +1,15 @@
 /*
  * @Author       : Ryan Zhang
  * @Date         : 2021-01-15 14:18:46
- * @LastEditTime : 2021-01-27 22:02:58
+ * @LastEditTime : 2021-02-21 17:50:01
  * @Descripttion : ListNode cases for LeetCode
  */
 
 #include <vector>
 #include <queue>
+#include <stack>
+#include <unordered_set>
+#include <map>
 
 #include "../../entity/ListNode.h"
 #include "../../entity/TreeNode.h"
@@ -302,5 +305,234 @@ class solutoins {
             p1 = p2->next;
             p2 = preMid->next;
         }
+    }
+
+    /**
+     * 147.对链表进行插入排序
+     */
+    ListNode* insertionSortList(ListNode* head) {
+        ListNode* dummy = new ListNode(0);
+        ListNode* pre = dummy, *cur = head, *next = nullptr;
+        while (cur) {
+            next = cur->next;
+            while (pre->next and pre->next->val < cur->val) {
+                pre = pre->next;
+            }
+            cur->next = pre->next;
+            pre->next = cur;
+            pre = dummy;
+            cur = next;
+        }
+        return dummy->next;
+    }
+
+    /**
+     * 148.排序链表
+     */
+    ListNode* sortList(ListNode* head) {
+        if (!head or !head->next) return head;
+        ListNode* pre = nullptr, *slow = head, *fast = head;
+        while (fast and fast->next) {
+            pre = slow;
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+        pre->next = nullptr;
+        return merge(sortList(head), sortList(slow));
+    }
+    private: ListNode* merge(ListNode* l1, ListNode* l2) {
+        ListNode* dummy = new ListNode(0), *p = dummy;
+        while (l1 and l2) {
+            if (l1->val < l2->val) {
+                p->next = l1;
+                l1 = l1->next;
+            } else {
+                p->next = l2;
+                l2 = l2->next;
+            }
+            p = p->next;
+        }
+        if (l1) p->next = l1;
+        if (l2) p->next = l2;
+        return dummy->next;
+    }
+
+    /**
+     * 160.相交链表
+     */
+    ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+        if (!headA or !headB) return nullptr;
+        ListNode* a = headA, *b = headB;
+        while (a != b) {
+            if (a) a = a->next;
+            else a = headB;
+            if (b) b = b->next;
+            else b = headA;
+        }
+        return a;
+    }
+
+    /**
+     * 203.移除链表元素
+     */
+    ListNode* removeElements(ListNode* head, int val) {
+        if (!head) return head;
+        head->next = removeElements(head->next, val);
+        if (head->val == val) return head->next;
+        return head;
+    }
+
+    /**
+     * 206.反转链表
+     */
+    ListNode* reverseList(ListNode* head) {
+        ListNode* newHead, *next;
+        while (head) {
+            next = head->next;
+            head->next = newHead;
+            newHead = head;
+            head = next;
+        } 
+        return newHead;
+    }
+
+    /**
+     * 234.回文链表
+     */
+    bool isPalindrome(ListNode* head) {
+        ListNode* slow = head, *fast = head;
+        while (fast and fast->next) {
+            fast = fast->next->next;
+            slow = slow->next;
+        }
+        if (!fast) slow = slow->next;
+        slow = reverseList(slow);
+        while (slow) {
+            if (slow->val == fast->val) return false;
+            slow = slow->next;
+            fast = fast->next;
+        }
+        return true;
+    }
+
+    /**
+     * 328.奇偶链表
+     */
+    ListNode* oddEvenList(ListNode* head) {
+        if (!head) return nullptr;
+        ListNode* odd = head, *even = head->next, *evenHead = even;
+        while (even and even->next) {
+            odd->next = odd->next->next;
+            even->next = even->next->next;
+            odd = odd->next;
+            even = even->next;
+        }
+        odd->next = head;
+        return head;
+    }
+
+    /**
+     * 445.两数相加
+     */
+    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+        vector<int> numsa, numsb;
+        while (l1) {
+            numsa.push_back(l1->val);
+            l1 = l1->next;
+        }
+        while (l2) {
+            numsb.push_back(l2->val);
+            l2 = l2->next;
+        }
+        int sum = 0;
+        ListNode* newHead = new ListNode(0);
+        while (!numsa.empty() or !numsb.empty()) {
+            if (!numsa.empty()) {
+                sum += numsa.back(), numsa.pop_back();
+            }
+            if (!numsb.empty()) {
+                sum += numsb.back(), numsb.pop_back();
+            }
+            ListNode* node = new ListNode(sum / 10);
+            newHead->val = sum % 10;
+            node->next = newHead;
+            newHead = node;
+            sum /= 10;
+        }
+        if (newHead->val == 0) return newHead->next;
+        return newHead;
+    }
+
+    /**
+     * 725.分隔链表
+     */
+    vector<ListNode*> splitListToParts(ListNode* root, int k) {
+        vector<ListNode*> parts(k, nullptr);
+        int len = 0;
+        for (ListNode* node = root; node; node = node->next)
+            len++;
+        int n = len / k, r = len % k;
+        ListNode* node = root, *prev = nullptr;
+        for (int i = 0; node && i < k; i++, r--) {
+            parts[i] = node;
+            for (int j = 0; j < n + (r > 0); j++) {
+                prev = node;
+                node = node->next;
+            }
+            prev->next = nullptr;
+        }
+        return parts;
+    }
+
+    /**
+     * 817.链表组件
+     */
+    int numComponents(ListNode* head, vector<int>& G) {
+        unordered_set<int> setG(G.begin(), G.end());
+        int res = 0;
+        while (head) {
+            if (setG.count(head->val) and (!head->next or !setG.count(head->next->val))) res++;
+            head = head->next;
+        }
+        return res;
+    }
+
+    /**
+     * 876.链表的中间结点
+     */
+    ListNode* middleNode(ListNode* head) {
+        ListNode* slow = head, *fast = head;
+        while (fast and fast->next) {
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+        return slow;
+    }
+
+    /**
+     * 1171.从链表中删去总和值为零的连续节点
+     */
+    ListNode* removeZeroSumSublists(ListNode* head) {
+        ListNode* dummy = new ListNode(0), *cur = dummy;
+        dummy->next = head;
+        int prefix = 0;
+        map<int, ListNode*> m;
+        while (cur) {
+            prefix += cur->val;
+            if (m.count(prefix)) {
+                cur =  m[prefix]->next;
+                int p = prefix + cur->val;
+                while (p != prefix) {
+                    m.erase(p);
+                    cur = cur->next;
+                    p += cur->val;
+                }
+                m[prefix]->next = cur->next;
+            } else {
+                m[prefix] = cur;
+            }
+            cur = cur->next;
+        }
+        return dummy->next;
     }
 };
